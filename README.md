@@ -22,30 +22,45 @@ We are providing groupings of tools and associated helpful prompts
   - [Feature Store Tools](src/teradata_mcp_server/tools/fs/README.md)
 - **RAG** tools, prompts and resources to manage vector store creation and use
   - [RAG Tools](src/teradata_mcp_server/tools/rag/README.md)
-- **Custom Tools** to easily implement tools for custom actions based on your data and business context. 
+- **Custom Semantic Layer** to easily implement domain-specific tools, prompts and resources based on your business data. Refer to [semantic layer definition](docs/CUSTOMIZING.md)
 
-### Adding custom tools
-You may add define custom "query" tools in the `custom_tools.yaml` file or in any file ending with `_tools.yaml`. 
-Simply specify the tool name, description and SQL query to be executed. No parameters are supported at this point.
+## Getting Started
+
+![Getting Started](docs/media/MCP.png)
+
+**Step 1.** - Identify the running Teradata System, you need username, password and host details to populate "teradata://username:password@host:1025". If you do not have a Teradata system to conect to, then leverage [Teradata Clearscape Experience](https://www.teradata.com/getting-started/demos/clearscape-analytics)
+
+**Step 2.** - To cofigure and run the MCP server, refer to the [Getting stated guide](docs/GETTING_STARTED.md).
+
+**Step 3.** - There are many client options availale, the [Client Guide](docs/client_guide/CLIENT_GUIDE.md) explains how to configure and run a sample of different clients.
 
 
---------------------------------------------------------------------------------------
+### Quick start with Claude desktop
+If you want to quickly evaluate the tool, we recommend using Claude desktop, the uv package manager and [Teradata Clearscape Experience](https://www.teradata.com/getting-started/demos/clearscape-analytics).
 
-## TLDR; I want to try it locally now
-
-If you have Docker and a client that can connect MCP servers via SSE, copy the code below, update the connection string set in `DATABASE_URI` with your database connection details and run it:
-
+  
+1. Get your Teradata database credentials or create a free sandbox at [Teradata Clearscape Experience](https://www.teradata.com/getting-started/demos/clearscape-analytics).
+2. Install [uv](https://docs.astral.sh/uv/getting-started/installation/). If you are on macOS, use Homebrew: `brew install uv`
+3. Clone this repository with `git clone https://github.com/Teradata/teradata-mcp-server.git`
+4. Install [Claude Desktop](https://claude.ai/download)
+5. Configure the claude_desktop_config.json (Settings>Developer>Edit Config) by adding the code below, updating the PATH_TO_DIRECTORY (where you cloned the repo in step 2) and database username, password and URL.
 ```
-export DATABASE_URI=teradata://username:password@host:1025
-git clone https://github.com/Teradata/teradata-mcp-server.git
-cd teradata-mcp-server
-docker compose up
+{
+  "mcpServers": {
+    "teradata": {
+      "command": "uv",
+      "args": [
+        "--directory",
+        "<PATH_TO_DIRECTORY>/teradata-mcp-server",
+        "run",
+        "teradata-mcp-server"
+      ],
+      "env": {
+        "DATABASE_URI": "teradata://<USERNAME>:<PASSWORD>@<HOST_URL>:1025/<USERNAME>"
+      }
+    }
+  }
 ```
-
-You can now use it with clients supporting SSE such as [Visual Studio Code](docs/CLIENT_GUIDE.md#using-with-visual-studio-code-co-pilot).
-
-
-
 
 ---------------------------------------------------------------------
 ## Certification

@@ -1,5 +1,5 @@
 # ┌────────────── Build stage ──────────────┐
-FROM python:3.13-slim AS builder
+FROM --platform=linux/amd64 python:3.13-slim AS builder
 WORKDIR /app
 
 COPY pyproject.toml uv.lock* /app/
@@ -18,11 +18,10 @@ COPY . /app
 
 # Now copy src separately — this layer will be re-run only if src changes
 COPY ./src /app/src
-
 # └──────────── End build stage ────────────┘
 
 # ┌───────────── Runtime stage ─────────────┐
-FROM python:3.13-slim
+FROM --platform=linux/amd64 python:3.13-slim
 WORKDIR /app
 
 # Create the user early
@@ -38,9 +37,11 @@ USER appuser
 
 RUN chmod -R u+w /app/src
 
+
 ENV PYTHONUNBUFFERED=1
-ENV MCP_TRANSPORT=sse
-ENV MCP_HOST=127.0.0.1
+ENV MCP_TRANSPORT=streamable-http
+ENV MCP_PATH=/mcp/
+ENV MCP_HOST=0.0.0.0
 ENV MCP_PORT=8001
 CMD ["uv", "run", "teradata-mcp-server"]
 # └──────────── End runtime stage ──────────┘

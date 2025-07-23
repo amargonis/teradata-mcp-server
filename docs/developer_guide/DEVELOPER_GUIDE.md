@@ -23,9 +23,11 @@ The directory structure will follow the following conventions
 - __init__.py - will contain server imports
 - server.py - contains the main server script and will decorate tools, prompts, and resources.
 
+
 [src/teradata_mcp_server/tools](./src/teradata_mcp_server/tools) - this will contain code to connect to the database as well as the modules.
 - __init__.py - will contain tool module imports
 - td_connect.py - contains the code responsible for connecting to Teradata.
+
 
 We will modularize the tool sets so that users will have the ability to add the tool sets that they need to the server.  It is expected that groupings of tools will have a consistent naming convention so that they can be easily associated.  
 
@@ -64,6 +66,7 @@ We will modularize the tool sets so that users will have the ability to add the 
 - fs_resources.py - will contain the resource handle code
 - README.md - will describe the tools, prompts, resources, and package dependencies
 
+
 [src/teradata_mcp_server/tools/rag](./src/teradata_mcp_server/tools/rag) - this will contain vector store tool set:
 - __init__.py - will contain library imports
 - rag_tools.py - will contain the tool handle code
@@ -97,22 +100,26 @@ The template code should be copied and prefixes for directory name and files sho
 - CHANGE_LOG.md - maintains the change log of releases.
 - CLIENT_GUIDE.md - explains how to connect common clients to the server.
 - CONTRIBUTING.md - guidelines for contributors
-- DEVELOPER_GUIDE.md - explains structural elements of the server for developers.
 - GETTING_STARTED.md - explains how to get the server up and running
-- HOW_TO_ADD_YOUR_FUNCTION.md - explains how to add tools to a module
 - SECURITY.md - explains how to register security issues
+
+[docs/developer_guide](./docs/developer_guide) - contains developer package documentation.
+- DEVELOPER_GUIDE.md - explains structural elements of the server for developers.
+- HOW_TO_ADD_YOUR_FUNCTION.md - explains how to add tools to a module
+- HOW_TO_ADD_CUSTOM_FUNCTIONS.md - explains how to add customer functions to the server.
 
 <br>
 
 ## Tool/Prompt/Resource Naming Convention
 To assist tool users we would like to align tool, prompt, and resources to a naming convention, this will assist MCP clients to group tools and understand its function.
 
-- tool/prompt/resource name starts with a verb and then the grouping identifier (e.g. get_base).
-- If the tool returns data it will be a get function  (e.g.  get_base_)
-- If the tool changes the state of data (e.g. write_base_)
-- If a prompt just prefix the grouping identifier that best fits (e.g. base)
-- If a resource just prefix the grouping identifier that best fits (e.g. base)
-- The tool/prompt/resource should have a descriptive name that is short, use lowercase with captials for new words.  (e.g. get_base_dbList, get_qlty_missingValues, write_dba_userGrant, write_dba_tableCreate)
+- tool/prompt/resource name starts the grouping identifier (e.g. base).
+- The tool/prompt/resource should have a descriptive name that is short, use lowercase with captials for new words.  (e.g. base_databaseList, qlty_missingValues, dba_tableSpace, dba_resusageUserSummary)
+
+Two guides have been created to show how to add tools and prompts:
+- [How to add new modules of tools](./HOW_TO_ADD_YOUR_FUNCTION.md)
+- [How to add customer fuctions](HOW_TO_ADD_CUSTOM_FUNCTIONS.md)
+
 
 <br><br><br>
 
