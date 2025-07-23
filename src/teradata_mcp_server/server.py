@@ -409,7 +409,7 @@ async def rag_set_config(
     vector_db: str = Field(description="Database containing the chunk vector store"),
     vector_table: str = Field(description="Table containing chunk embeddings for similarity search"),
 ) -> ResponseType:
-    return execute_db_tool( _tdconn, td.handle_set_rag_config, query_db=query_db, model_db=model_db, vector_db=vector_db, vector_table=vector_table,)
+    return execute_db_tool( td.handle_set_rag_config, query_db=query_db, model_db=model_db, vector_db=vector_db, vector_table=vector_table,)
 
 @mcp.tool(
     description=(
